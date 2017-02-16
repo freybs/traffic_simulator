@@ -27,7 +27,6 @@ void traffic_simulator::test_movement() {
     traffic_object *object;
     for(int i = 0; i < num_objects_to_paint; ++i) {
         object = traffic_objects_to_paint.front();
-        paint_traffic_object(object);
         traffic_objects_to_paint.pop();
         traffic_objects_to_paint.push(object);
         if(object->get_speed() > 0) {
@@ -41,7 +40,6 @@ void traffic_simulator::increment_traffic_simulator() {
     traffic_object *object;
     for(int i = 0; i < num_objects_to_paint; ++i) {
         object = traffic_objects_to_paint.front();
-        paint_traffic_object(object);
         traffic_objects_to_paint.pop();
         traffic_objects_to_paint.push(object);
         if(object->get_speed() > 0) {
@@ -70,7 +68,8 @@ void traffic_simulator::init_environment() {
     int lane_height = road_height / m_num_lanes;
     m_lane_origin_x = road_paint_x;
     m_lane_origin_y = new int[m_num_lanes];
-    for(int i = 0; i < m_num_lanes; ++i) m_lane_origin_y[i] = road_paint_y + (i+((1-RATIO_AUTO_H_2_LANE_H)/2)) * lane_height;
+    for(int i = 0; i < m_num_lanes; ++i)
+        m_lane_origin_y[i] = road_paint_y + (i+((1-RATIO_AUTO_H_2_LANE_H)/2)) * lane_height;
     m_auto_h = lane_height * RATIO_AUTO_H_2_LANE_H;
     m_auto_w = m_auto_h * RATIO_AUTO_W_2_AUTO_H;
 
@@ -110,15 +109,17 @@ void traffic_simulator::init_environment() {
         }
         road_paint_y += m_h/m_num_lengths;
     }
+}
 
+void traffic_simulator::add_new_auto() {
     traffic_object *new_auto = new traffic_object(
-        m_lane_origin_x - m_auto_w,
+        m_lane_origin_x,
         m_lane_origin_y[0],
         m_auto_w,
         m_auto_h,
         QColor(255,0,0),
         true,
-        65
+        10
     );
     add_traffic_object(new_auto);
 }

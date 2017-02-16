@@ -24,6 +24,7 @@ class traffic_simulator {
         void test_movement();
         void paint_traffic_objects();
         void set_painter(QPainter *p);
+        void add_new_auto();
 
     protected:
 

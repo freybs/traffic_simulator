@@ -18,11 +18,12 @@ int main(int argc, char *argv[]) {
     traffic_simulator_environment ts_env{w.geometry().width(),w.geometry().height(),1,2};
     traffic_simulator ts(&ts_env);
     w.connect_traffic_simulator(&ts);
-//    ts.increment_traffic_simulator();
+    ts.add_new_auto();
     while(true) {
+        ts.test_movement();
         w.update();
         app.processEvents();
-        usleep(500000);
+        usleep(50000);
     }
 }
 
